@@ -53,21 +53,16 @@ DM or text me if you've donated, and I'll update this page every day
             const verticalRange = 2;
 
             output.innerHTML = '';
-
-            output.innerHTML = '';
-
-            // Split by lines first, then by words
             const lines = text.split('\n');
 
             lines.forEach((line, lineIndex) => {
                 const words = line.split(' ');
 
                 words.forEach((word, wordIndex) => {
-                    // Create a container for each word
                     const className = word.toLowerCase().replace(/[^a-z0-9]/g, '');
                     let wordSpan;
 
-                    // Wrap ACLU and Everesting in links
+                    // this is a super hack
                     if (className === 'aclu' || className === 'everesting') {
                         const link = document.createElement('a');
                         link.href = className === 'aclu'
@@ -87,7 +82,6 @@ DM or text me if you've donated, and I'll update this page every day
                         wordSpan.className = className;
                     }
 
-                    // Add each character of the word
                     for (let char of word) {
                         const span = document.createElement('span');
                         span.textContent = char;
@@ -106,7 +100,6 @@ DM or text me if you've donated, and I'll update this page every day
                         output.appendChild(wordSpan);
                     }
 
-                    // Add space after word (except last word in line)
                     if (wordIndex < words.length - 1) {
                         const space = document.createElement('span');
                         space.innerHTML = '&nbsp;';
@@ -114,36 +107,41 @@ DM or text me if you've donated, and I'll update this page every day
                     }
                 });
 
-                // Add line break (except after last line)
                 if (lineIndex < lines.length - 1) {
                     output.appendChild(document.createElement('br'));
                 }
             });
         }
 
-        // Apply on load
         applyWonky();
 
-        // Trigger icon animations on scroll
+        const nickIcon = document.querySelector('.icon-nick');
+        const tomIcon = document.querySelector('.icon-tom');
+
         let hasScrolled = false;
         window.addEventListener('scroll', () => {
             if (!hasScrolled) {
                 hasScrolled = true;
-                const nickIcon = document.querySelector('.icon-nick');
-                const tomIcon = document.querySelector('.icon-tom');
 
-                // Randomly pick Nick or Tom (50/50 chance)
                 const selectedIcon = Math.random() < 0.5 ? nickIcon : tomIcon;
 
-                // Add animation to the selected icon
                 selectedIcon.style.animation = 'rattle 0.5s ease-in-out';
 
-                // Remove animation after it completes
                 setTimeout(() => {
                     selectedIcon.style.animation = '';
                 }, 500);
             }
         });
+
+        setTimeout(() => {
+            const selectedIcon = Math.random() < 0.5 ? nickIcon : tomIcon;
+
+            selectedIcon.style.animation = 'rattle 0.5s ease-in-out';
+
+            setTimeout(() => {
+                selectedIcon.style.animation = '';
+            }, 500);
+        }, 1000);
     </script>
 </body>
 </html>
