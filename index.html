@@ -39,50 +39,73 @@
     <script>
         function applyWonky() {
             const text = `
-I'm raising money for the ACLU on my 29th birthday by Everesting.
+I'm raising money for the ACLU on my 29th birthday by Everesting
 
-Nick and I are running up and down 29,032 ft for 14 laps on the Manitou Incline.
+My friend, Nick and I will be running up and down 29,032 ft for 14 laps on the Manitou Incline
 
-DM or text me if you've donated, and I'll update this page every day.
+DM or text me if you've donated, and I'll update this page every day
 
-(If I can't do it, I'll have to keep the mullet and mustache for a month)
-            
+(If I can't finish the Everest, I'll have to keep the mullet and mustache for a month)
+
             `;
             const output = document.getElementById('output');
             const rotationRange = 8;
-            const verticalRange = 4;
+            const verticalRange = 2;
 
             output.innerHTML = '';
-            
+
             output.innerHTML = '';
-            
+
             // Split by lines first, then by words
             const lines = text.split('\n');
-            
+
             lines.forEach((line, lineIndex) => {
                 const words = line.split(' ');
-                
+
                 words.forEach((word, wordIndex) => {
                     // Create a container for each word
-                    const wordSpan = document.createElement('span');
-                    wordSpan.style.display = 'inline-block';
-                    wordSpan.style.whiteSpace = 'nowrap';
-                    
+                    const className = word.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    let wordSpan;
+
+                    // Wrap ACLU and Everesting in links
+                    if (className === 'aclu' || className === 'everesting') {
+                        const link = document.createElement('a');
+                        link.href = className === 'aclu'
+                            ? 'https://action.aclu.org/give/now'
+                            : 'https://en.wikipedia.org/wiki/Everesting';
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                        wordSpan = document.createElement('span');
+                        wordSpan.style.display = 'inline-block';
+                        wordSpan.style.whiteSpace = 'nowrap';
+                        wordSpan.className = className;
+                        link.appendChild(wordSpan);
+                    } else {
+                        wordSpan = document.createElement('span');
+                        wordSpan.style.display = 'inline-block';
+                        wordSpan.style.whiteSpace = 'nowrap';
+                        wordSpan.className = className;
+                    }
+
                     // Add each character of the word
                     for (let char of word) {
                         const span = document.createElement('span');
                         span.textContent = char;
-                        
+
                         const rotation = (Math.random() - 0.5) * rotationRange * 2;
                         const verticalShift = (Math.random() - 0.5) * verticalRange * 2;
                         const scale = 0.95 + Math.random() * 0.1;
-                        
+
                         span.style.transform = `rotate(${rotation}deg) translateY(${verticalShift}px) scale(${scale})`;
                         wordSpan.appendChild(span);
                     }
-                    
-                    output.appendChild(wordSpan);
-                    
+
+                    if (className === 'aclu' || className === 'everesting') {
+                        output.appendChild(wordSpan.parentElement);
+                    } else {
+                        output.appendChild(wordSpan);
+                    }
+
                     // Add space after word (except last word in line)
                     if (wordIndex < words.length - 1) {
                         const space = document.createElement('span');
@@ -90,16 +113,37 @@ DM or text me if you've donated, and I'll update this page every day.
                         output.appendChild(space);
                     }
                 });
-                
+
                 // Add line break (except after last line)
                 if (lineIndex < lines.length - 1) {
                     output.appendChild(document.createElement('br'));
                 }
             });
         }
-        
+
         // Apply on load
         applyWonky();
+
+        // Trigger icon animations on scroll
+        let hasScrolled = false;
+        window.addEventListener('scroll', () => {
+            if (!hasScrolled) {
+                hasScrolled = true;
+                const nickIcon = document.querySelector('.icon-nick');
+                const tomIcon = document.querySelector('.icon-tom');
+
+                // Randomly pick Nick or Tom (50/50 chance)
+                const selectedIcon = Math.random() < 0.5 ? nickIcon : tomIcon;
+
+                // Add animation to the selected icon
+                selectedIcon.style.animation = 'rattle 0.5s ease-in-out';
+
+                // Remove animation after it completes
+                setTimeout(() => {
+                    selectedIcon.style.animation = '';
+                }, 500);
+            }
+        });
     </script>
 </body>
 </html>
