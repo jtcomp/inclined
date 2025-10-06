@@ -7,6 +7,7 @@
 body {
     background-color: white;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -87,11 +88,21 @@ body {
 }
 
 .fill-bar {
-    --fill-percent: 1%;
+    --fill-percent: 15%;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
     -webkit-mask-image: linear-gradient(to right, black var(--fill-percent), transparent var(--fill-percent));
     mask-image: linear-gradient(to right, black var(--fill-percent), transparent var(--fill-percent));
+}
+
+.text-section {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2rem;
+    padding: 2rem;
+}
+
+.text-section span {
+    display: inline-block;
 }
