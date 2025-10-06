@@ -74,10 +74,10 @@ body {
         transform: rotate(0deg);
     }
     25% {
-        transform: rotate(-2deg) translateX(-1px);
+        transform: rotate(-4deg) translateX(-2px);
     }
     75% {
-        transform: rotate(2deg) translateX(1px);
+        transform: rotate(4deg) translateX(2px);
     }
 }
 
