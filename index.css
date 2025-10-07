@@ -88,7 +88,7 @@ body {
 }
 
 .fill-bar {
-    --fill-percent: 15%;
+    --fill-percent: 31.5%;
     width: 100%;
     height: 100%;
     object-fit: cover;
